@@ -1,0 +1,7 @@
+{
+  "name": "dircmp",
+  "version": "0.0.1",
+  "dependencies": {
+    "findit": "~0.1.2"
+  }
+}
