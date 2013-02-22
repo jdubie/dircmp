@@ -1,5 +1,3 @@
-t: test
-
 compile: clean build
 
 build:
@@ -16,6 +14,5 @@ test:
 		./node_modules/.bin/mocha \
 			--compilers coffee:coffee-script \
 			test
-
 
 .PHONY: test

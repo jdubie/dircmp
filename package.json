@@ -1,6 +1,23 @@
 {
   "name": "dircmp",
   "version": "0.0.1",
+  "main": "./lib/dircmp",
+  "author": {
+    "name": "Jack Dubie"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jdubie/dircmp.git"
+  },
+  "bugs": {
+    "url": "http://github.com/jdubie/dircmp/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/jdubie/dircmp/raw/master/LICENSE"
+    }
+  ],
   "dependencies": {
     "findit": "~0.1.2",
     "coffee-script": "~1.4.0"
@@ -11,5 +28,9 @@
     "async": "~0.2.5",
     "wrench": "~1.4.4",
     "should": "~1.2.2"
+  },
+  "scripts": {
+    "install": "make",
+    "test": "make test"
   }
 }
