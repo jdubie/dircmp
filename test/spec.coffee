@@ -9,7 +9,22 @@ dircmp = require 'src/dircmp'
 TEST_DIR = 'test_folder'
 
 describe 'dircmp', ->
-  #describe '#cmp', ->
+  describe '#cmp', ->
+    before (ready) -> create(TEST_DIR, ready)
+    it 'should say two identical directorys are equal', (done) ->
+      dircmp.cmp TEST_DIR, TEST_DIR, (err, equal) ->
+        should.not.exist(err)
+        should.exist(equal)
+        equal.should.eql true
+        done()
+    it 'should say two non-equal dir are not equal', (done) ->
+      dircmp.cmp TEST_DIR, 'node_modules', (err, equal) ->
+        should.not.exist(err)
+        should.exists(equal)
+        equal.should.eql false
+        done()
+    # TODO add test for two dirs with same files but different trees
+    after (done) -> destroy(TEST_DIR, done)
   describe '#hash', ->
     before (ready) -> create(TEST_DIR, ready)
     it 'should generate hash', (done) ->
