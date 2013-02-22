@@ -19,13 +19,13 @@
     }
   ],
   "dependencies": {
+    "coffee-script": "~1.4.0",
     "findit": "~0.1.2",
-    "coffee-script": "~1.4.0"
+    "async": "~0.2.5"
   },
   "devDependencies": {
     "mocha": "~1.8.1",
     "mkdirp": "~0.3.4",
-    "async": "~0.2.5",
     "wrench": "~1.4.4",
     "should": "~1.2.2"
   },
