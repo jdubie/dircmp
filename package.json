@@ -30,7 +30,7 @@
     "should": "~1.2.2"
   },
   "scripts": {
-    "install": "make",
-    "test": "make test"
+    "install": "cake build",
+    "test": "cake test"
   }
 }
