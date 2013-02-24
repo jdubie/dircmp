@@ -1,7 +1,7 @@
-fs = require 'fs'
-async = require 'async'
+fs     = require 'fs'
+async  = require 'async'
 wrench = require 'wrench'
-path = require 'path'
+path   = require 'path'
 mkdirp = require 'mkdirp'
 should = require 'should'
 dircmp = require 'src/dircmp'
@@ -10,14 +10,24 @@ TEST_DIR = 'test_folder'
 
 describe 'dircmp', ->
   describe '#cmp', ->
-    before (ready) -> create(TEST_DIR, ready)
+    before (ready) ->
+      async.series [
+        (next) ->
+          fs.mkdir(TEST_DIR, next)
+        (next) ->
+          create(path.join(TEST_DIR, 'a'), next)
+        (next) ->
+          create(path.join(TEST_DIR, 'b'), next)
+      ], ready
     it 'should say two identical directorys are equal', (done) ->
-      dircmp.cmp TEST_DIR, TEST_DIR, (err, equal) ->
+      dirs = ['a', 'b'].map (d) -> path.join(TEST_DIR, d)
+      dircmp.cmp dirs..., (err, equal) ->
         should.not.exist(err)
         should.exist(equal)
         equal.should.eql true
         done()
     it 'should say two non-equal dir are not equal', (done) ->
+      @timeout(5000)
       dircmp.cmp TEST_DIR, 'node_modules', (err, equal) ->
         should.not.exist(err)
         should.exists(equal)
@@ -65,4 +75,4 @@ destroy = (dir, callback) ->
   wrench.rmdirRecursive(dir, callback)
 
 randomFile = (path, callback) ->
-  fs.writeFile(path, Math.random().toString(), callback)
+  fs.writeFile(path, "FILE CONTENTS", callback)

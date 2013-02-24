@@ -1,5 +1,6 @@
 fs     = require 'fs'
 crypto = require 'crypto'
+path   = require 'path'
 findit = require 'findit'
 async  = require 'async'
 
@@ -29,16 +30,19 @@ exports.hash = (dir, callback) ->
 
   finder.on 'end', () ->
     async.parallel [
-      (callback) -> async.map(files, addPath(shasum, 'file'), callback)
-      (callback) -> async.map(links, addPath(shasum, 'link'), callback)
+      (callback) -> async.map(files, addPath(dir, shasum, 'file'), callback)
+      (callback) -> async.map(links, addPath(dir, shasum, 'link'), callback)
     ], (err) ->
       callback(err, shasum.digest('hex'))
 
-addPath = (shasum, type) ->
+addPath = (dir, shasum, type) ->
   (path, callback) ->
     reader = switch
       when 'file' then fs.readFile
       when 'link' then fs.readLink
     reader path, (err, data) ->
-      shasum.update(path + data)
+      shasum.update(removeRoot(dir, path) + data)
       callback(err)
+
+removeRoot = (root, dir) ->
+  path.relative(root, dir)
